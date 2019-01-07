@@ -22,7 +22,8 @@ Route::get('/language', function () {
 });
 
 Route::get('/language/{locale}', function ($locale) {
+
     Session::put('locale', $locale);
     return redirect()->back();
-});
+})->name('language');
 
