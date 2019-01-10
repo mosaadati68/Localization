@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="container">
 
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
 
@@ -29,40 +29,46 @@
             </ul>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('language',['locale'=>'en']) }}"><img
-                                src="{{ asset('img/flags/United-Kingdom.png') }}" alt=""
-                                width="45" height="30"> English</a>
+                    <a class="nav-link language" data-locale="en">
+                        <img src="{{ asset('img/flags/United-Kingdom.png') }}" alt=""
+                             width="45" height="30"> English</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('language',['locale'=>'fa']) }}"
-                       style="font-family: IRANSansWeb"><img
-                                src="{{ asset('img/flags/Iran.png') }}" alt="" width="45"
-                                height="30"> فارسی </a>
+                    <a class="nav-link language" style="font-family: IRANSansWeb" data-locale="fa">
+                        <img src="{{ asset('img/flags/Iran.png') }}" alt="" width="45"
+                             height="30"> فارسی </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('language',['locale'=>'ch']) }}"><img
-                                src="{{ asset('img/flags/France.png') }}" alt="" width="45"
-                                height="30"> Chienese</a>
+                    <a class="nav-link language" data-locale="ch">
+                        <img src="{{ asset('img/flags/France.png') }}" alt="" width="45"
+                             height="30"> Chienese</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-</div>
-<div class="row mt-5">
-    <div class="col-md-12 col-lg-12 text-center">
-        <h1>@lang('messages.message')</h1>
+    <div class="row mt-5">
+        <div class="col-md-12 col-lg-12 text-center">
+            <h1>@lang('messages.message')</h1>
+        </div>
     </div>
+
 </div>
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
-        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>--}}
+{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>--}}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.language').on('click', function () {
+            let local = $(this).attr('data-locale');
+            axios.get('/language/' + local)
+                .then(function (response) {
+                    $('#container').html(response.data);
+                });
+        });
+    });
+</script>
 </body>
 </html>

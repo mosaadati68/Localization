@@ -23,7 +23,13 @@ Route::get('/language', function () {
 
 Route::get('/language/{locale}', function ($locale) {
 
-    Session::put('locale', $locale);
-    return redirect()->back();
+//    if (Session::has('locale')) {
+        \app()->setlocale(Session::get('locale'));
+//    } else {
+//        Session::put('locale', $locale);
+//    }
+    $languagePage = view('partials.languages', ['locale' => $locale])->render();
+    return response($languagePage);
+//    return $locale;
 })->name('language');
 
